@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Container\Attributes\Auth;
+use Illuminate\Support\Facades\Auth;
+
 // use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -15,12 +16,18 @@ class HomeController extends Controller
 
     public function redirects()
     {
-        $usertype = Auth::users()->usertype;
+        $usertype = Auth::user()->usertype;
 
         if ($usertype == '1') {
-            return view();
-        } else {
-            return view('Admin.home');
+            return view('Admin.adminhome');
+        }
+
+        else{
+            return view('home');
         }
     }
 }
+
+
+
+
