@@ -21,8 +21,38 @@ class AdminController extends Controller
     }
 
  public function foodmenu(){
-        // $data=User::all();
-        return view ('Admin.foodmenu',);
+        $data=food::all();
+        return view ('Admin.foodmenu',compact('data'));
+    }
+
+
+    public function deletemenu($id){
+        $data=food::find($id);
+        $data->delete();
+        return redirect()->back();
+    }
+
+
+     public function updateview($id){
+        $data=food::find($id);
+        // $data->update();
+        return view('Admin.updatemenu',compact('data'));
+    }
+
+    public function update(Request $request, $id){
+         $data=food::find($id);
+
+    $image = $request->image;
+
+    $imagename = time().'.'.$image->getClientOriginalExtension();
+    $request->image->move('foodimage', $imagename);
+    $data->image = $imagename;
+    $data->title = $request->title;
+    $data->price = $request->price;
+    $data->description = $request->description;
+    $data->save();
+    return redirect()->back();
+
     }
 
  public function upload(Request $request){
