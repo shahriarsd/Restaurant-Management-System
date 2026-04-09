@@ -76,6 +76,7 @@
     <td>{{ $data->price }}</td>
     <td>{{ $data->description }}</td>
     <td><img src="/foodimage/{{ $data->image }}" width="100" height="100"></td>
+{{-- <td><img src="{{ asset('foodimage/' . $data->image) }}" alt="{{ $data->image }}" width="100" height="100"></td> --}}
     <td><a href="{{ url('/deletemenu', $data->id) }}">Delete</a></td>
     <td><a href="{{ url('/updateview', $data->id) }}">Update</a></td>
 

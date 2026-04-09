@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Food;
+use App\Models\Foodchef;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -21,26 +23,26 @@ class AdminController extends Controller
     }
 
  public function foodmenu(){
-        $data=food::all();
+        $data=Food::all();
         return view ('Admin.foodmenu',compact('data'));
     }
 
 
     public function deletemenu($id){
-        $data=food::find($id);
+        $data=Food::find($id);
         $data->delete();
         return redirect()->back();
     }
 
 
      public function updateview($id){
-        $data=food::find($id);
+        $data=Food::find($id);
         // $data->update();
         return view('Admin.updatemenu',compact('data'));
     }
 
     public function update(Request $request, $id){
-         $data=food::find($id);
+         $data=Food::find($id);
 
     $image = $request->image;
 
@@ -54,6 +56,7 @@ class AdminController extends Controller
     return redirect()->back();
 
     }
+
 
  public function upload(Request $request){
 
@@ -71,6 +74,89 @@ class AdminController extends Controller
 
 
     }
+
+
+    public function reservation(Request $request){
+        $data = new Reservation();
+
+        $data->name = $request->name;
+        $data->email = $request->email;
+        $data->phone = $request->phone;
+        $data->guest = $request->guest;
+
+        $data->date = \Carbon\Carbon::createFromFormat('d.m.Y', $request->date)
+            ->format('Y-m-d');
+
+        $data->time = $request->time;
+        $data->message = $request->message;
+
+        $data->save();
+        return redirect()->back();
+
+    }
+
+    public function viewreservation(){
+        $data=reservation::all();
+        return view ('Admin.adminreservation',compact('data'));
+    }
+
+    public function viewchef(){
+
+        $data=Foodchef::all();
+        return view ('Admin.adminchef', compact('data'));
+    }
+
+
+
+    public function uploadchef(Request $request){
+
+        $data = new Foodchef;
+        $image = $request->image;
+        $imagename = time().'.'.$image->getClientOriginalExtension();
+        $request->image->move('chefimage', $imagename);
+        $data->image = $imagename;
+
+        $data->name = $request->name;
+        $data->speciality = $request->speciality;
+        $data->save();
+        return redirect()->back();
+    }
+
+    public function updatechef($id){
+        $data=Foodchef::find($id);
+        return view('Admin.updatechef',compact('data'));
+    }
+
+
+     public function updatefoodchef(Request $request, $id){
+        $data=Foodchef::find($id);
+
+
+        $image = $request->image;
+
+        if($image){
+
+        $imagename = time().'.'.$image->getClientOriginalExtension();
+        $request->image->move('chefimage', $imagename);
+        $data->image = $imagename;
+
+
+        }
+
+
+        $data->name= $request->name;
+        $data->speciality = $request->speciality;
+        $data->save();
+        return redirect()->back();
+    }
+
+
+    public function deletechef($id){
+        $data=Foodchef::find($id);
+        $data->delete();
+        return redirect()->back();
+    }
+
 
 
 }
