@@ -30,6 +30,7 @@ Route::post('/updatefoodchef/{id}',[AdminController::class,'updatefoodchef']);
 Route::get('/deletechef/{id}',[AdminController::class,'deletechef']);
 
 Route::post('/addcart/{id}',[HomeController::class,'addcart']);
+Route::get('/showcart/{id}',[HomeController::class,'showcart']);
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [HomeController::class, 'redirects'])->name('dashboard');
