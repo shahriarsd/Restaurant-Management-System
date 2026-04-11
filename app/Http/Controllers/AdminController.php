@@ -165,5 +165,14 @@ class AdminController extends Controller
         return view('Admin.orders',compact('data'));
     }
 
+    public function search(Request $request){
+
+        $search=$request->search;
+
+        $data=Order::where('name','like','%'.$search.'%')->orWhere('foodname','like','%'.$search.'%')->get();
+
+        return view('Admin.orders',compact('data'));
+    }
+
 
 }
