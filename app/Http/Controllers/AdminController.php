@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Food;
 use App\Models\Foodchef;
+use App\Models\Order;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 
@@ -157,6 +158,12 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+
+    public function orders(){
+        $data=Order::all();
+
+        return view('Admin.orders',compact('data'));
+    }
 
 
 }
